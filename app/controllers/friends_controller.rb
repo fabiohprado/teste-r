@@ -1,7 +1,8 @@
 class FriendsController < ApplicationController
   before_action :set_friend, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
-  #before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
+
   # GET /friends
   # GET /friends.json
   def index
@@ -28,9 +29,10 @@ class FriendsController < ApplicationController
   def create
     #@friend = Friend.new(friend_params)
     @friend = current_user.friends.build(friend_params)
+    
     respond_to do |format|
       if @friend.save
-        format.html { redirect_to @friend, notice: 'Friend was successfully created.' }
+        format.html { redirect_to @friend, notice: 'Amigo adicionado com sucesso' }
         format.json { render :show, status: :created, location: @friend }
       else
         format.html { render :new }
@@ -44,7 +46,7 @@ class FriendsController < ApplicationController
   def update
     respond_to do |format|
       if @friend.update(friend_params)
-        format.html { redirect_to @friend, notice: 'Friend was successfully updated.' }
+        format.html { redirect_to @friend, notice: 'Amigo atualizado com sucesso' }
         format.json { render :show, status: :ok, location: @friend }
       else
         format.html { render :edit }
@@ -58,14 +60,9 @@ class FriendsController < ApplicationController
   def destroy
     @friend.destroy
     respond_to do |format|
-      format.html { redirect_to friends_url, notice: 'Friend was successfully destroyed.' }
+      format.html { redirect_to friends_url, notice: 'Amigo apagado com sucesso' }
       format.json { head :no_content }
     end
-  end
-
-  def correct_user
-    @friend = correct_user.friends.find_by(id: params[:id])
-    redirect_to friends_path, notice: "Não autorizado a fazer essa modificação" if @friend.nil?
   end
 
   def correct_user

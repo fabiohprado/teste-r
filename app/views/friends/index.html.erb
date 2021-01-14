@@ -1,35 +1,38 @@
-<h1>Friends List</h1>
+<% if user_signed_in? %>
+  <h1>Lista de amigos</h1>
 
-<table class="table table-striped table-bordered table-sm">
-  <thead class="table-dark">
-    <tr>
-      <th>Primeiro nome</th>
-      <th>último nome</th>
-      <th>E-mail</th>
-      <th>Whatsapp</th>
-      <th>Twitter</th>
-      <th>User Id</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @friends.each do |friend| %>
+  <table class="table table-striped table-bordered table-sm">
+    <thead class="table-dark">
       <tr>
-        <td><%= friend.primeiro_nome %></td>
-        <td><%= friend.ultimo_nome %></td>
-        <td><%= friend.email %></td>
-        <td><%= friend.telefone %></td>
-        <td><%= friend.twitter %></td>
-        <td><%= friend.user_id %></td>
-        <td><%= link_to 'Show', friend %></td>        
-        <td><%= link_to 'Edit', edit_friend_path(friend) %></td>
-        <td><%= link_to 'Destroy', friend, method: :delete, data: { confirm: 'Are you sure?' } %></td>        
-        </tr>
-    <% end %>
-  </tbody>
-</table>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Whatsapp</th>
+        <th>Twitter</th>        
+        <th colspan="3"></th>
+      </tr>
+    </thead>
 
-<br>
+    <tbody>
+      <% @friends.each do |friend| %>
+        <% if friend.user == current_user %>
+        <tr>
+          <td><%= friend.primeiro_nome %> <%= friend.ultimo_nome %></td>
+          <td><%= friend.email %></td>
+          <td><%= friend.telefone %></td>
+          <td><%= friend.twitter %></td>
+          <td><%= link_to 'Mostrar', friend, class:"btn btn-outline-info btm-sm" %></td>        
+          <td><%= link_to 'Editar', edit_friend_path(friend), class:"btn btn-outline-info btm-sm" %></td>
+          <td><%= link_to 'Apagar', friend, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-outline-danger btm-sm" %></td>        
+          </tr>
+          <% end %>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'New Friend', new_friend_path, class:"btn btn-secondary" %>
+  <br>
+
+  <%= link_to 'Novo amigo', new_friend_path, class:"btn btn-secondary" %>
+<% else %>
+<h5>Olá, essa é a pagina inicial do app, mas se logar você irá descubrir funções interessantes. :o</h5>  
+
+<% end %>
