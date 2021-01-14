@@ -1,0 +1,9 @@
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+    <h5 class="card-title"> <%= @friend.primeiro_nome %> <%= @friend.ultimo_nome %> </h5>
+    <p class="card-text"><%= @friend.email %> </br> <%= @friend.telefone %> </br> <%= @friend.twitter %> </p>
+    <%= link_to 'Edit', edit_friend_path(@friend), class:"btn btn-secondary" %> 
+    <%= link_to 'Back', friends_path, class:"btn btn-secondary" %>
+  </div>
+</div>
+
